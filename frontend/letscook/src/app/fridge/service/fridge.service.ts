@@ -1,3 +1,4 @@
+import { IngredientToAdd } from './../model/ingredientToAdd';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Ingredient } from '../model/ingredient';
@@ -12,6 +13,10 @@ export class FridgeService {
 
   getAllIngredients() {
     return this.http.get<Ingredient[]>(`${environment.api}/ingredients`);
+  }
+
+  add(postBody: IngredientToAdd) {
+    return this.http.post(`${environment.api}/fridge`, postBody);
   }
 
 }

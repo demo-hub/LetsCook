@@ -8,19 +8,19 @@
 </button>
     </div>
     <div class="modal-body">
-        <form>
+        <form [formGroup]="addForm">
             <div class="form-group">
                 <label for="typeahead-basic">Search for an ingredient:</label>
-                <input id="typeahead-basic" type="text" class="form-control" [ngbTypeahead]="search" />
+                <input id="typeahead-basic" type="text" class="form-control" [ngbTypeahead]="search" formControlName="ingredient" />
                 <br>
                 <label for="quant">Quantity</label>
                 <div class="input-group">
-                    <input type="number" class="form-control" min="1">
+                    <input type="number" class="form-control" min="1" formControlName="quant">
                 </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="modal.close('Save click')">Save</button>
+        <button type="submit" class="btn btn-success" (click)="addToFridge()">Save</button>
     </div>
 </ng-template>

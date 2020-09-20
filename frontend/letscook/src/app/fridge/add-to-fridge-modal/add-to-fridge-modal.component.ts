@@ -1,9 +1,10 @@
 import { Ingredient } from '../model/ingredient';
 import { FridgeService } from './../service/fridge.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-to-fridge-modal',
@@ -11,6 +12,8 @@ import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
   styleUrls: ['./add-to-fridge-modal.component.scss']
 })
 export class AddToFridgeModalComponent implements OnInit {
+
+  addForm: FormGroup;
 
   closeResult = '';
 
@@ -26,9 +29,20 @@ export class AddToFridgeModalComponent implements OnInit {
         : this.ingredients.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).map(i => i.name).slice(0, 10))
     )
 
-  constructor(private modalService: NgbModal, private fridgeService: FridgeService) { }
+  constructor(private modalService: NgbModal,
+              private fridgeService: FridgeService,
+              private fb: FormBuilder,
+              private config: NgbTypeaheadConfig) {
+                config.showHint = true;
+              }
 
   ngOnInit() {
+
+    this.addForm = this.fb.group({
+      ingredient: ['', Validators.required],
+      quant: [1, Validators.required]
+    });
+
     this.fridgeService.getAllIngredients()
     .subscribe(ingredients => {
       this.ingredients = ingredients;
@@ -50,6 +64,20 @@ export class AddToFridgeModalComponent implements OnInit {
       return 'by clicking on a backdrop';
     } else {
       return `with: ${reason}`;
+    }
+  }
+
+  addToFridge() {
+    if (this.addForm.valid) {
+
+      this.addForm.patchValue({
+        ingredient: this.ingredients.find(i => i.name === this.addForm.controls.ingredient.value).id
+      });
+
+      this.fridgeService.add(this.addForm.value)
+      .subscribe(result => {
+        this.addForm.reset();
+      });
     }
   }
 

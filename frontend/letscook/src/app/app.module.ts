@@ -7,10 +7,11 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { NavbarComponent } from './navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FridgeComponent } from './fridge/fridge.component';
 import { AddToFridgeModalComponent } from './fridge/add-to-fridge-modal/add-to-fridge-modal.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,10 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NgbModule,
     AutocompleteLibModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [HttpClient],
+  providers: [HttpClient, NgbTypeaheadConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
