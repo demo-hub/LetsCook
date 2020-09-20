@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "letscook"
+  "defaultProject": "letscook",
+  "cli": {
+    "analytics": false
+  }
 }
