@@ -1,0 +1,34 @@
+<button type="button" class="btn btn-success" (click)="open(content)"><i></i>Add to fridge</button>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Add to fridge</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+  <span aria-hidden="true">&times;</span>
+</button>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="ingredient">Ingredient</label>
+                <div class="input-group">
+                    <div class="ng-autocomplete">
+                        <ng-autocomplete [data]="ingredients" [searchKeyword]="keyword" [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplate let-item>
+                            <a [innerHTML]="item.name"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
