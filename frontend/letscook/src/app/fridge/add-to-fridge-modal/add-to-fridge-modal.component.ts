@@ -2,6 +2,8 @@ import { Ingredient } from '../model/ingredient';
 import { FridgeService } from './../service/fridge.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-to-fridge-modal',
@@ -15,6 +17,14 @@ export class AddToFridgeModalComponent implements OnInit {
   keyword = 'name';
 
   ingredients: Ingredient[];
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      map(term => term.length < 2 ? []
+        : this.ingredients.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).map(i => i.name).slice(0, 10))
+    )
 
   constructor(private modalService: NgbModal, private fridgeService: FridgeService) { }
 
