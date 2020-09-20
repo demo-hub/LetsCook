@@ -1,4 +1,6 @@
+import { FridgeService } from './service/fridge.service';
 import { Component, OnInit } from '@angular/core';
+import { Fridge, FridgeContent } from './model/fridge';
 
 @Component({
   selector: 'app-fridge',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FridgeComponent implements OnInit {
 
-  constructor() { }
+  fridgeContent: FridgeContent[];
+
+  constructor(private fridgeService: FridgeService) { }
 
   ngOnInit() {
+    this.fridgeService.getAllFridgeContent()
+    .subscribe(fridge => {
+      this.fridgeContent = fridge;
+    });
   }
 
 }

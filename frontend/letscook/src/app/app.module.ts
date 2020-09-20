@@ -12,6 +12,9 @@ import { FridgeComponent } from './fridge/fridge.component';
 import { AddToFridgeModalComponent } from './fridge/add-to-fridge-modal/add-to-fridge-modal.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgbModule,
     AutocompleteLibModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    FlexLayoutModule
   ],
   providers: [HttpClient, NgbTypeaheadConfig],
   bootstrap: [AppComponent]

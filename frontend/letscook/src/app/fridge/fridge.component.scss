@@ -1,0 +1,16 @@
+.example-card {
+    min-width: 100%;
+    margin: 40px;
+}
+
+.cards {
+    width: 400px;
+}
+
+.content {
+    padding: 16px;
+}
+
+.content>mat-card {
+    width: 200px;
+}
